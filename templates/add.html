@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Добавить термин</title>
+    <style>
+        button {
+            background-color: #400642; /* синий */
+            color: rgb(255, 255, 255);
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #007bb5;
+        }
+        textarea {
+            width: 100%;        /* растянуть на всю ширину контейнера */
+            max-width: 800px;   /* но не шире 800px */
+            min-width: 500px;   /* и не уже 500px */
+            height: 150px;      /* высота по умолчанию */
+            box-sizing: border-box; /* чтобы паддинги не ломали ширину */
+        }
+    </style>
+</head>
+<body>
+    <h1>Добавить термин</h1>
+    <form method="post">
+        <label>Термин: <input type="text" name="term" required></label><br>
+        <label>Определение:<br><textarea name="definition" required></textarea></label><br>
+        <label>Комментарий:<br><textarea name="comment"></textarea></label><br>
+        <label>Раздел:
+            <select name="section_id" required>
+                {% for section in sections %}
+                    <option value="{{ section.id }}">{{ section.name }}</option>
+                {% endfor %}
+            </select>
+        </label><br>
+        <button type="submit">Добавить</button>
+    </form>
+    <a href="{{ url_for('index') }}">Назад</a>
+</body>
+</html>

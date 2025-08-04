@@ -1,0 +1,27 @@
+<!-- templates/detail.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{{ entry.term }}</title>
+  <style>
+    .preserve {
+      white-space: pre-wrap;    /* сохраняет переносы строк и пробелы */
+      word-wrap: break-word;    /* позволяет переносить длинные слова */
+    }
+  </style>
+</head>
+<body>
+  <h1>{{ entry.term }}</h1>
+  <h3>Определение:</h3>
+  <div class="preserve">{{ entry.definition }}</div>
+
+  {% if entry.comment %}
+    <h3>Комментарий:</h3>
+    <div class="preserve">{{ entry.comment }}</div>
+  {% endif %}
+
+  <p><strong>Раздел:</strong> {{ entry.section.name }}</p>
+  <p><a href="{{ url_for('index') }}">← Назад</a></p>
+</body>
+</html>

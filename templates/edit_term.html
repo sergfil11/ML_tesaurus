@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Редактировать термин</title>
+    <style>
+        button {
+            background-color: #400642; /* синий */
+            color: rgb(255, 255, 255);
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #007bb5;
+        }
+        textarea {
+            width: 100%;        /* растянуть на всю ширину контейнера */
+            max-width: 800px;   /* но не шире 800px */
+            min-width: 500px;   /* и не уже 500px */
+            height: 150px;      /* высота по умолчанию */
+            box-sizing: border-box; /* чтобы паддинги не ломали ширину */
+        }
+        </style>
+</head>
+<body>
+    <h1>Редактировать термин</h1>
+    <form method="post">
+        <label>Термин:
+            <input type="text" name="term" value="{{ term.term }}" required>
+        </label><br><br>
+        <label>Определение:<br>
+            <textarea name="definition" required>{{ term.definition }}</textarea>
+        </label><br><br>
+        <label>Комментарий:<br>
+            <textarea name="comment">{{ term.comment }}</textarea>
+        </label><br><br>
+        <label>Раздел:
+            <select name="section_id" required>
+                {% for section in sections %}
+                    <option value="{{ section.id }}" {% if section.id == term.section_id %}selected{% endif %}>
+                        {{ section.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </label><br><br>
+        <button type="submit">Сохранить</button>
+    </form>
+    <a href="{{ url_for('index') }}">Назад</a>
+</body>
+</html>

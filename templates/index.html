@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Тезаурус</title>
+    <style>
+    button {
+        background-color: #400642; /* синий */
+        color: rgb(255, 255, 255);
+        border: none;
+        border-radius: 4px;
+        padding: 8px 12px;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #007bb5;
+    }
+    </style>
+</head>
+<body>
+    <h1>Тезаурус</h1>
+    <form action="{{ url_for('add') }}" style="display:inline;">
+        <button type="submit">Добавить термин</button>
+      </form>
+      <form action="{{ url_for('add_section') }}" style="display:inline;">
+        <button type="submit">Добавить раздел</button>
+      </form>      
+
+    {% for section in sections %}
+        <h2>
+        {{ section.name }}
+        <!-- кнопка удаления раздела -->
+        <form action="{{ url_for('delete_section', section_id=section.id) }}"
+              method="post"
+              style="display:inline;margin-left:1em;">
+          <button type="submit" onclick="return confirm('Удалить раздел и все его термины?')">
+            Удалить раздел
+          </button>
+        </form>
+        </h2>
+        {% if section.terms %}
+            <ul>
+            {% for term in section.terms %}
+                <li>
+                    <a href="{{ url_for('term_detail', term_id=term.id) }}">{{ term.term }}</a>
+                    <form action="{{ url_for('delete_term', term_id=term.id) }}" method="post" style="display:inline;">
+                        <button type="submit" onclick="return confirm('Удалить этот термин?')">Удалить</button>
+                    </form>
+                    <a href="{{ url_for('edit_term', term_id=term.id) }}">Редактировать</a>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p><em>Пока нет терминов в этом разделе.</em></p>
+        {% endif %}
+    {% endfor %}
+</body>
+</html>
